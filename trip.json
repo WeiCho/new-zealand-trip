@@ -1,0 +1,116 @@
+{
+  "trip": {
+    "title": "紐西蘭",
+    "destination": "紐西蘭",
+    "hero_en": "New Zealand",
+    "hero_word": "紐西蘭",
+    "start_date": "2027-01-01",
+    "end_date": "2027-01-05",
+    "travelers": 2,
+    "currency": "NT$",
+    "budget": 0,
+    "fx": {
+      "currency": "NZ$",
+      "rate": 19
+    },
+    "emergency": [
+      {
+        "label": "警察・消防・救護",
+        "name": "紐西蘭緊急電話",
+        "desc": "遭竊、事故、火災、需要救護車都打這支，接通後說 Police／Fire／Ambulance。",
+        "hours": "24 小時",
+        "tel": "111"
+      },
+      {
+        "label": "健康諮詢",
+        "name": "Healthline",
+        "desc": "不確定要不要去急診時先打，護理師電話諮詢，免費。",
+        "hours": "24 小時",
+        "tel": "0800611116"
+      },
+      {
+        "label": "外交部急難救助",
+        "name": "外交部旅外國人急難救助",
+        "desc": "護照遺失、遭逮捕、重大意外等需要政府協助時撥打。",
+        "hours": "24 小時",
+        "tel": "+886800085095"
+      }
+    ]
+  },
+  "days": [
+    {
+      "date": "2027-01-01",
+      "theme": "待排",
+      "weather": "",
+      "items": [
+        {
+          "time": "09:00",
+          "name": "從住處出發",
+          "type": "住宿",
+          "note": "行程還沒排，日期與地點之後補上。",
+          "duration": "5m"
+        }
+      ]
+    },
+    {
+      "date": "2027-01-02",
+      "theme": "待排",
+      "weather": "",
+      "items": [
+        {
+          "time": "09:00",
+          "name": "從住處出發",
+          "type": "住宿",
+          "note": "行程還沒排，日期與地點之後補上。",
+          "duration": "5m"
+        }
+      ]
+    },
+    {
+      "date": "2027-01-03",
+      "theme": "待排",
+      "weather": "",
+      "items": [
+        {
+          "time": "09:00",
+          "name": "從住處出發",
+          "type": "住宿",
+          "note": "行程還沒排，日期與地點之後補上。",
+          "duration": "5m"
+        }
+      ]
+    },
+    {
+      "date": "2027-01-04",
+      "theme": "待排",
+      "weather": "",
+      "items": [
+        {
+          "time": "09:00",
+          "name": "從住處出發",
+          "type": "住宿",
+          "note": "行程還沒排，日期與地點之後補上。",
+          "duration": "5m"
+        }
+      ]
+    },
+    {
+      "date": "2027-01-05",
+      "theme": "待排",
+      "weather": "",
+      "items": [
+        {
+          "time": "09:00",
+          "name": "從住處出發",
+          "type": "住宿",
+          "note": "行程還沒排，日期與地點之後補上。",
+          "duration": "5m"
+        }
+      ]
+    }
+  ],
+  "wishlist": [],
+  "bookings": [],
+  "transit": [],
+  "shopping": []
+}
