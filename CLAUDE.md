@@ -19,7 +19,7 @@
 - `transit[].at` 是「從哪一站出發」的時間，不是目的地。改了站的時間，要一起檢查前後的 transit `at` 與 `next_transit`。
 - 一天景點／購物別超過 3 個（render.py 會警告）。
 - 每站要有 `map_query`（英文地名或地址，用來開 Google 地圖的藍色 G）；航班、搭車中不放。
-- 彈窗只放 1–2 句 `note`、停留 `duration`、營業 `booking.hours`、下一站 `next_transit`；不加官網或其他連結。
+- 彈窗只放 1–2 句 `note`、停留 `duration`、營業 `booking.hours`、下一站 `next_transit`；不加官網或其他連結（例外：機票比價彈窗的「到官網查價」按鈕，使用者要的）。
 - 重要景點與餐廳加 `photo`（img／alt／credit），用該地本身的照片，credit 標拍攝者與來源。
 - 金額用紐幣（NZ$），`trip.fx.rate` = 1 紐幣幾台幣。
 

@@ -462,6 +462,9 @@ button.more{background:none;border-width:0 0 1px;border-style:solid;border-color
 .fl-price span{font-size:13px;margin-right:3px;color:var(--muted)}
 .fl-price small{margin-left:6px;font-size:12.5px;color:var(--muted)}
 .fl-price.na{font-size:17px;color:var(--muted)}
+.fl-src{margin-top:2px;font-size:12px;color:var(--soft)}
+.fl-link{display:block;margin-top:18px;padding:12px;background:var(--sky);color:#fff;text-align:center;font-size:14.5px;font-weight:500;text-decoration:none}
+.fl-link:hover{opacity:.88}
 .fl-stop{margin-top:6px;font-size:13.5px}
 .fl-stop small{display:block;color:var(--muted)}
 .fl-trip{margin-top:16px;padding-top:12px;border-top:1px solid var(--line)}
@@ -1278,14 +1281,16 @@ FORM: 使用者指定 langgenius.co.jp（brief-pinned）；code-led，封面照 
               {%- if a.price is not none %}
               <p class="fl-price"><span>NT$</span>{{ "{:,}".format(a.price) }}<small>來回</small></p>
               {%- else %}
-              <p class="fl-price na">還沒開賣</p>
+              <p class="fl-price na">{{ a.status or "還沒開賣" }}</p>
               {%- endif %}
+              {%- if a.src %}<p class="fl-src">{{ a.src }}</p>{% endif %}
               {%- if a.stopover %}
               <p class="fl-stop">先北後南 <b>NT${{ "{:,}".format(a.stopover.price) }}</b>{% if a.stopover.note %}<small>{{ a.stopover.note }}</small>{% endif %}</p>
               {%- endif %}
               {{ fl_trip("去程", a.out) }}
               {{ fl_trip("回程", a.back) }}
               {%- if a.note %}<p class="em-desc">{{ a.note }}</p>{% endif %}
+              {%- if a.url %}<a class="fl-link" href="{{ a.url }}" target="_blank" rel="noopener">到官網查價 ↗</a>{% endif %}
               <button type="button" class="em-close" data-em-close>關閉</button>
             </div>
           </dialog>
