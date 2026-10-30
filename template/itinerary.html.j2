@@ -451,19 +451,28 @@ button.more{background:none;border-width:0 0 1px;border-style:solid;border-color
 .wish-group:not(:first-child){margin-top:clamp(36px,5vh,56px)}
 .wish-group .zh{font-family:var(--sans);font-size:12.5px;letter-spacing:.2em;color:var(--muted)}
 .wl{list-style:none;margin:0;padding:0;border-top:1px solid var(--ink)}
-.fl{list-style:none;margin:0;padding:0;border-top:1px solid var(--ink)}
-.fl>li{padding:20px 0 18px;border-bottom:1px solid var(--line)}
-.fl-h b{font-size:16px;font-weight:500}
-.fl-h small{display:block;margin-top:2px;color:var(--muted);font-size:13px}
-.fl-p{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;margin:14px 0 0}
-.fl-p>div{padding:0 10px;border-left:1px solid var(--line)}
-.fl-p>div:first-child{padding-left:0;border-left:0}
-.fl-p dt{font-size:11.5px;color:var(--soft);letter-spacing:.04em}
-.fl-p dd{margin:4px 0 0;font-family:var(--sans);font-size:17px;font-weight:500;font-variant-numeric:tabular-nums;white-space:nowrap}
-.fl-p .cur{font-size:11px;margin-right:2px;color:var(--muted)}
-.fl-p small{display:block;margin-top:3px;font-size:11.5px;line-height:1.45;color:var(--muted)}
-.fl-p .na dd{color:var(--soft)}
-.fl-note{margin:12px 0 0;font-size:13.5px;color:var(--muted)}
+.fl-cols{display:grid;grid-template-columns:1fr 1fr;gap:0 clamp(16px,4vw,48px)}
+.fl-col h3{padding-bottom:10px;border-bottom:1px solid var(--ink);font-size:13px;letter-spacing:.06em}
+.fl-col ul{list-style:none;margin:0;padding:0}
+.fl-col li{border-bottom:1px solid var(--line)}
+.fl-btn{display:block;width:100%;padding:14px 0;border:0;background:none;color:inherit;font:inherit;font-size:15.5px;font-weight:500;text-align:left;cursor:pointer}
+.fl-btn::after{content:"›";float:right;color:var(--soft)}
+.fl-btn:hover{color:var(--sky-d)}
+.fl-price{margin-top:10px;font-family:var(--sans);font-size:26px;font-weight:500;font-variant-numeric:tabular-nums}
+.fl-price span{font-size:13px;margin-right:3px;color:var(--muted)}
+.fl-price small{margin-left:6px;font-size:12.5px;color:var(--muted)}
+.fl-price.na{font-size:17px;color:var(--muted)}
+.fl-stop{margin-top:6px;font-size:13.5px}
+.fl-stop small{display:block;color:var(--muted)}
+.fl-trip{margin-top:16px;padding-top:12px;border-top:1px solid var(--line)}
+.fl-trip h4{font-size:14px}
+.fl-trip h4 span{margin-left:8px;font-weight:400;font-size:12.5px;color:var(--muted)}
+.fl-trip ol{list-style:none;margin:8px 0 0;padding:0 0 0 12px;border-left:2px solid var(--sky)}
+.fl-trip li{padding:4px 0;font-size:13.5px}
+.fl-trip li b{display:block;font-weight:500}
+.fl-trip li span{color:var(--muted);font-variant-numeric:tabular-nums}
+.fl-trip li.wait{color:var(--muted);font-size:12.5px}
+.fl-trip li.wait small{display:block}
 .wl li{border-bottom:1px solid var(--line)}
 .wl-btn{
   flex:1;min-width:0;display:grid;gap:2px;padding:12px 0;margin:0;border:0;background:none;cursor:pointer;
@@ -1228,26 +1237,62 @@ FORM: 使用者指定 langgenius.co.jp（brief-pinned）；code-led，封面照 
 </section>
 {% endif %}
 
-{# ── 機票比價：各家飛北島／南島／先北後南的來回價 ── #}
+{# ── 機票比價：北島一格、南島一格，只列航空公司；點開看價錢與每段時間 ── #}
 {% if trip.flights %}{% set fl = trip.flights %}
+{% macro fl_trip(label, t) -%}
+  {%- if t %}
+  <div class="fl-trip">
+    <h4>{{ label }}{% if t.total %}<span>共 {{ t.total }}</span>{% endif %}</h4>
+    <ol>
+    {%- for g in t.legs or [] %}
+      {%- if g.wait %}
+      <li class="wait">在{{ g.wait }}等 {{ g.dur }}{% if g.note %}<small>{{ g.note }}</small>{% endif %}</li>
+      {%- else %}
+      <li><b>{{ g.fly }}</b><span>{{ g.time }}・{{ g.dur }}{% if g.by %}・{{ g.by }}{% endif %}</span></li>
+      {%- endif %}
+    {%- endfor %}
+    </ol>
+  </div>
+  {%- endif %}
+{%- endmacro %}
 <section class="section" id="flights">
   <div class="section-heading">
     <h2>機票比價</h2>
     {%- if fl.sample %}<p>{{ fl.sample }}{% if fl.asof %}（{{ fl.asof }}）{% endif %}</p>{% endif %}
   </div>
-  <ul class="fl">
-  {%- for a in fl.airlines %}
-    <li>
-      <div class="fl-h"><b>{{ a.name }}</b>{% if a.how %}<small>{{ a.how }}</small>{% endif %}</div>
-      <dl class="fl-p">
-      {%- for key, label in [("north", "北島・奧克蘭"), ("south", "南島・基督城"), ("stopover", "先北後南")] %}{% set c = a[key] or {} %}
-        <div{% if c.price is none %} class="na"{% endif %}><dt>{{ label }}</dt><dd>{% if c.price is not none %}<span class="cur">NT$</span>{{ "{:,}".format(c.price) }}{% else %}—{% endif %}</dd>{% if c.via %}<small>{{ c.via }}</small>{% endif %}</div>
+  <div class="fl-cols">
+  {%- for key, label in [("north", "北島・奧克蘭"), ("south", "南島・基督城")] %}{% set col = loop.index %}
+    <div class="fl-col">
+      <h3>{{ label }}</h3>
+      <ul>
+      {%- for a in fl[key] or [] %}
+        {%- set fid = "fl-" ~ col ~ "-" ~ loop.index %}
+        <li>
+          <button type="button" class="fl-btn" data-dlg="{{ fid }}" aria-haspopup="dialog">{{ a.name }}</button>
+          <dialog class="em-dlg info-dlg fl-dlg" id="{{ fid }}" aria-labelledby="{{ fid }}-t">
+            <div class="em-dlg-in">
+              <p class="dlg-kicker">{{ label }}</p>
+              <h3 id="{{ fid }}-t" tabindex="-1" autofocus>{{ a.name }}</h3>
+              {%- if a.price is not none %}
+              <p class="fl-price"><span>NT$</span>{{ "{:,}".format(a.price) }}<small>來回</small></p>
+              {%- else %}
+              <p class="fl-price na">還沒開賣</p>
+              {%- endif %}
+              {%- if a.stopover %}
+              <p class="fl-stop">先北後南 <b>NT${{ "{:,}".format(a.stopover.price) }}</b>{% if a.stopover.note %}<small>{{ a.stopover.note }}</small>{% endif %}</p>
+              {%- endif %}
+              {{ fl_trip("去程", a.out) }}
+              {{ fl_trip("回程", a.back) }}
+              {%- if a.note %}<p class="em-desc">{{ a.note }}</p>{% endif %}
+              <button type="button" class="em-close" data-em-close>關閉</button>
+            </div>
+          </dialog>
+        </li>
       {%- endfor %}
-      </dl>
-      {%- if a.note %}<p class="fl-note">{{ a.note }}</p>{% endif %}
-    </li>
+      </ul>
+    </div>
   {%- endfor %}
-  </ul>
+  </div>
 </section>
 {% endif %}
 
