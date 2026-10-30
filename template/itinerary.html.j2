@@ -451,6 +451,19 @@ button.more{background:none;border-width:0 0 1px;border-style:solid;border-color
 .wish-group:not(:first-child){margin-top:clamp(36px,5vh,56px)}
 .wish-group .zh{font-family:var(--sans);font-size:12.5px;letter-spacing:.2em;color:var(--muted)}
 .wl{list-style:none;margin:0;padding:0;border-top:1px solid var(--ink)}
+.fl{list-style:none;margin:0;padding:0;border-top:1px solid var(--ink)}
+.fl>li{padding:20px 0 18px;border-bottom:1px solid var(--line)}
+.fl-h b{font-size:16px;font-weight:500}
+.fl-h small{display:block;margin-top:2px;color:var(--muted);font-size:13px}
+.fl-p{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;margin:14px 0 0}
+.fl-p>div{padding:0 10px;border-left:1px solid var(--line)}
+.fl-p>div:first-child{padding-left:0;border-left:0}
+.fl-p dt{font-size:11.5px;color:var(--soft);letter-spacing:.04em}
+.fl-p dd{margin:4px 0 0;font-family:var(--sans);font-size:17px;font-weight:500;font-variant-numeric:tabular-nums;white-space:nowrap}
+.fl-p .cur{font-size:11px;margin-right:2px;color:var(--muted)}
+.fl-p small{display:block;margin-top:3px;font-size:11.5px;line-height:1.45;color:var(--muted)}
+.fl-p .na dd{color:var(--soft)}
+.fl-note{margin:12px 0 0;font-size:13.5px;color:var(--muted)}
 .wl li{border-bottom:1px solid var(--line)}
 .wl-btn{
   flex:1;min-width:0;display:grid;gap:2px;padding:12px 0;margin:0;border:0;background:none;cursor:pointer;
@@ -738,6 +751,7 @@ FORM: 使用者指定 langgenius.co.jp（brief-pinned）；code-led，封面照 
       {%- if runs.routes %}<a href="#run">跑步</a>{% endif %}
       {%- if wishlist %}<a href="#wishlist">口袋名單</a>{% endif %}
       {%- if shopping %}<a href="#shopping">購買清單</a>{% endif %}
+      {%- if trip.flights %}<a href="#flights">機票</a>{% endif %}
       <a href="#budget">花費</a>
       {%- if trip.packing %}<a href="#packing">出發前檢查</a>{% endif %}
       {%- if trip.emergency %}<a class="nav-urgent" href="#emergency">緊急聯絡</a>{% endif %}
@@ -752,6 +766,7 @@ FORM: 使用者指定 langgenius.co.jp（brief-pinned）；code-led，封面照 
           {%- if runs.routes %}<a href="#run">跑步{{ pill() }}</a>{% endif %}
           {%- if wishlist %}<a href="#wishlist">口袋名單{{ pill() }}</a>{% endif %}
           {%- if shopping %}<a href="#shopping">購買清單{{ pill() }}</a>{% endif %}
+          {%- if trip.flights %}<a href="#flights">機票{{ pill() }}</a>{% endif %}
           <a href="#budget">花費{{ pill() }}</a>
           {%- if trip.packing %}<a href="#packing">出發前檢查{{ pill() }}</a>{% endif %}
         </div>
@@ -1207,6 +1222,29 @@ FORM: 使用者指定 langgenius.co.jp（brief-pinned）；code-led，封面照 
           <button type="button" class="em-close" data-em-close>關閉</button>
         </div>
       </dialog>
+    </li>
+  {%- endfor %}
+  </ul>
+</section>
+{% endif %}
+
+{# ── 機票比價：各家飛北島／南島／先北後南的來回價 ── #}
+{% if trip.flights %}{% set fl = trip.flights %}
+<section class="section" id="flights">
+  <div class="section-heading">
+    <h2>機票比價</h2>
+    {%- if fl.sample %}<p>{{ fl.sample }}{% if fl.asof %}（{{ fl.asof }}）{% endif %}</p>{% endif %}
+  </div>
+  <ul class="fl">
+  {%- for a in fl.airlines %}
+    <li>
+      <div class="fl-h"><b>{{ a.name }}</b>{% if a.how %}<small>{{ a.how }}</small>{% endif %}</div>
+      <dl class="fl-p">
+      {%- for key, label in [("north", "北島・奧克蘭"), ("south", "南島・基督城"), ("stopover", "先北後南")] %}{% set c = a[key] or {} %}
+        <div{% if c.price is none %} class="na"{% endif %}><dt>{{ label }}</dt><dd>{% if c.price is not none %}<span class="cur">NT$</span>{{ "{:,}".format(c.price) }}{% else %}—{% endif %}</dd>{% if c.via %}<small>{{ c.via }}</small>{% endif %}</div>
+      {%- endfor %}
+      </dl>
+      {%- if a.note %}<p class="fl-note">{{ a.note }}</p>{% endif %}
     </li>
   {%- endfor %}
   </ul>
