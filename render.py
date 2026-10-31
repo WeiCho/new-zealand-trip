@@ -327,10 +327,10 @@ def make_icon_svg(trip):
     glyph = xml_escape(label[0])
     return (
         '<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">'
-        '<rect width="512" height="512" rx="112" fill="#0033ff"/>'
+        '<rect width="512" height="512" rx="112" fill="#1c1a17"/>'
         '<text x="50%" y="54%" text-anchor="middle" dominant-baseline="central" '
         'font-family="Noto Serif TC,Georgia,serif" font-size="300" font-weight="700" '
-        f'fill="#ffffff">{glyph}</text></svg>'
+        f'fill="#fbf7ef">{glyph}</text></svg>'
     )
 
 
@@ -341,8 +341,8 @@ def make_manifest(trip):
         "start_url": "./" + OUTPUT_NAME,
         "scope": "./",
         "display": "standalone",
-        "background_color": "#ffffff",
-        "theme_color": "#ffffff",
+        "background_color": "#fbf7ef",
+        "theme_color": "#fbf7ef",
         "icons": [
             {"src": ICON_NAME, "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable"}
         ],
