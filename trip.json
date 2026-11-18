@@ -9,6 +9,50 @@
     "travelers": 2,
     "currency": "NT$",
     "budget": 0,
+    "essentials": {
+      "asof": "2026/11/18 查",
+      "items": [
+        {
+          "name": "NZeTA 電子旅行授權",
+          "nzd": 17,
+          "note": "用官方 App 申請 NZ$17，網站 NZ$23；效期 2 年，官方建議至少提早 72 小時申請。"
+        },
+        {
+          "name": "IVL 國際旅客觀光保育稅",
+          "nzd": 100,
+          "note": "申請 NZeTA 時一起付。"
+        },
+        {
+          "name": "NZTD 紐西蘭旅客聲明",
+          "nzd": 0,
+          "note": "出發前 24 小時內線上填（官方 NZTD 網站或 App）。"
+        },
+        {
+          "name": "國際駕照",
+          "twd": 250,
+          "note": "要開車才需要。監理站當場辦，效期 3 年；在紐西蘭要跟台灣駕照正本一起帶。",
+          "optional": true
+        },
+        {
+          "name": "機票",
+          "note": "來回 2.6 萬–4.5 萬，見上方機票比價。",
+          "ref": "#flights"
+        },
+        {
+          "name": "旅平險＋海外醫療",
+          "twd": 1100,
+          "approx": true,
+          "optional": true,
+          "note": "不是規定但建議保，紐西蘭看病很貴；10–16 天約 NT$1,000–1,500。"
+        },
+        {
+          "name": "護照",
+          "twd": 1300,
+          "optional": true,
+          "note": "離開紐西蘭那天之後還要有 3 個月以上效期，不夠才要換。"
+        }
+      ]
+    },
     "fx": {
       "currency": "NZ$",
       "rate": 19
